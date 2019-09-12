@@ -28,7 +28,7 @@ Build a YAML file called "pubsub-data.yml".<br/>
 Fill it in the format as follows:<br/>
 For every topic fill in project, topic and subscriptions IDs, as given from Pub/Sub.<br/>
 Get your Logz.io [token](https://app.logz.io/#/dashboard/settings/general).<br/>
-View example in [data-example.yml](https://github.com/logzio/logzio-pubsub/blob/develop/data-example.yml).
+View example in [pubsub-data-example.yml](https://github.com/logzio/logzio-pubsub/blob/develop/pubsub-data-example.yml).
 
 ```yml
 logzio-pubsub:
