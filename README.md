@@ -1,46 +1,63 @@
 # logzio-pubsub
 
-logzio-pubsub is a Docker container that uses Filebeat to collect logs from Google Pub/Sub and forward those logs to your Logz.io account.
+logzio-pubsub is a Docker container that uses Filebeat to collect logs from Google Cloud Platform through Pub/Sub and forward those logs to your Logz.io account.
+<br/>/*
+logzio-pubsub mounts docker.sock and the Docker logs directory to the container itself, allowing Filebeat to collect the logs and metadata.
+<br/>
+logzio-pubsub ships logs only. */<br/>
 
-To use this container, you'll need to build a Publishers/Subscribers data file (Step 1) and export your logs by creating sinks (Step 2).
-logzio-pubsub uses this data to generate a valid Filebeat configuration for the container.
-//?logzio-pubsub mounts docker.sock and the Docker logs directory to the container itself, allowing Filebeat to collect the logs and metadata.
+To use this container, you'll need:
+1. A Google Cloud Platform project.
+2. Topics and subscribers to your project, created on Cloud Pub/Sub.
+3. A Sink to export your logs, created on Stackdriver.
+4. A Pub/Sub data YAML file.
 
-//?logzio-pubsub ships logs only.
+To complete these stages please follow the pre-setup. // link to pre-setup section <br/>
+If you already have those go to logzio-pubsub setup. // link to setup section
 
-##logzio-pubsub setup
+## Pre-setup
 
-### 1. Build your YAML data file called "data.yml"
+### Quickstart with Cloud Pub/Sub
+  Read about [Cloud Pub/Sub](https://cloud.google.com/pubsub/docs/overview).<br/>
+  To create Cloud Pub/Sub topics and subscribers to your GCP project, [follow these steps](https://cloud.google.com/pubsub/docs/quickstart-console).<br/>
+    
+### Export your logs
+ To create a sink to export your logs, [follow these steps](https://cloud.google.com/logging/docs/export/configure_export_v2).<br/> Use Cloud Pub/Sub as the destination.
+### Build your YAML data file
+Build a YAML file called "pubsub-data.yml".<br/>
+Fill it in the format as follows:<br/>
+For every topic fill in project, topic and subscriptions IDs, as given from Pub/Sub.<br/>
+Get your Logz.io [token](https://app.logz.io/#/dashboard/settings/general).<br/>
+View example in [data-example.yml](https://github.com/logzio/logzio-pubsub/blob/develop/data-example.yml).
+
 ```yml
 logzio-pubsub:
     token: <LOGZIO_ACCOUNT_TOKEN>
     publishers:
-    #for every publisher : fill in project id, topic id, publisher and subscribers details, as given from pubsub:
-    <
-    #for publisher 1:
-    - project_id: <project id>
-      credentials_file: <{$PATH}/credential-file.json>
-      topic_id: <topic id>
-      subscriptions: <firstSubName, seconedSubName, thirdSubName, ...>
+    - project_id: <PROJECT-1_ID>
+      credentials_file: <PATH/TO/YOUR/FILE/credential-file.json>
+      topic_id: <TOPIC-1_ID>
+      subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
 
-    #for publisher 2:
-     - project_id: <project id>
-      credentials_file: <{$PATH}/credential-file.json>
-      topic_id: <topic id>
-      subscriptions: <firstSubName, seconedSubName, thirdSubName, ...>
+   - project_id: <PROJECT-1_ID>
+      credentials_file: <PATH/TO/YOUR/FILE/credential-file.json>
+      topic_id: <TOPIC-2_ID>
+      subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
+      type: <name your log type as a key>
+
+    - project_id: <PROJECT-2_ID>
+      credentials_file: <PATH/TO/YOUR/FILE/credential-file.json>
+      topic_id: <TOPIC-1_ID>
+      subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
 
     #and so on...
-    >
+    
 ```
-Get your Logz.io [token](https://app.logz.io/#/dashboard/settings/general).
-View example in [data-example.yml](https://github.com/logzio/logzio-pubsub/blob/develop/data-example.yml).
+## logzio-pubsub setup
 
-### 2. Create an export Sink
-Create a sink for exporting your logs [here](https://cloud.google.com/logging/docs/export/configure_export_v2).
-
-### 3. Pull the Docker image
+### 1. Pull the Docker image
 
 Download the logzio/logzio-pubsub image:
 
@@ -48,17 +65,15 @@ Download the logzio/logzio-pubsub image:
 docker pull logzio/logzio-pubsub
 ```
 
-### 4. Run the container
-
-For a complete list of options, see the parameters below the code block.👇
+### 2. Run the container
 
 ```shell
 docker run --name logzio-pubsub \
--v /Users/ronishaham/Desktop/Roni/APP/data.yml:/usr/local/etc/filebeat/data.yml
--v /Users/ronishaham/Desktop/Roni/APP/credential-file.json:/usr/local/etc/filebeat/credential-file.json
+-v PATH/TO/YOUR/FILE//data.yml:/usr/local/etc/filebeat/data.yml \
+-v PATH/TO/YOUR/FILE//credential-file.json:/usr/local/etc/filebeat/credential-file.json \
 logzio/logzio-pubsub
 ```
 
-### 5. Check Logz.io for your logs
+### 3. Check Logz.io for your logs
 
 Spin up your Docker containers if you haven’t done so already. Give your logs a few minutes to get from your system to ours, and then open [Kibana](https://app.logz.io/#/dashboard/kibana).

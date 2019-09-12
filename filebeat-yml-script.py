@@ -22,14 +22,14 @@ def _add_topic():
             print(pubsub_data_dictionary["logzio-pubsub"][publisher_index]["subscriptions"][subscriber_index])
             subscriber_dict = {
                 "type" : "google-pubsub",
-                "project_id" : pubsub_data_dictionary["logzio-pubsub"][publisher_index]["project_id"],
-                "topic": pubsub_data_dictionary["logzio-pubsub"][publisher_index]["topic_id"],
-                "credentials_file" : pubsub_data_dictionary["logzio-pubsub"][publisher_index]["credentials_file"],
-                "subscription.name" : pubsub_data_dictionary["logzio-pubsub"][publisher_index]["subscriptions"][subscriber_index],
+                "project_id" : pubsub_data_dictionary["logzio-pubsub"]["publishers"][publisher_index]["project_id"],
+                "topic": pubsub_data_dictionary["logzio-pubsub"]["publishers"][publisher_index]["topic_id"],
+                "credentials_file" : pubsub_data_dictionary["logzio-pubsub"]["publishers"][publisher_index]["credentials_file"],
+                "subscription.name" : pubsub_data_dictionary["logzio-pubsub"]["publishers"][publisher_index]["subscriptions"][subscriber_index],
                 "fields":
                     {
                         "logzio_codec": "JSON",
-                        "token": pubsub_data_dictionary["logzio-pubsub"][publisher_index]["token"],
+                        "token": pubsub_data_dictionary["logzio-pubsub"]["token"],
                         "type": pubsub_data_dictionary["logzio-pubsub"][publisher_index]["type"],
                     },
                 "fields_under_root": "true",
