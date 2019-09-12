@@ -69,7 +69,7 @@ docker pull logzio/logzio-pubsub
 
 ```shell
 docker run --name logzio-pubsub \
--v PATH/TO/YOUR/FILE//data.yml:/usr/local/etc/filebeat/data.yml \
+-v PATH/TO/YOUR/FILE//pubsub-data.yml:/usr/local/etc/filebeat/pubsub-data.yml \
 -v PATH/TO/YOUR/FILE//credential-file.json:/usr/local/etc/filebeat/credential-file.json \
 logzio/logzio-pubsub
 ```
