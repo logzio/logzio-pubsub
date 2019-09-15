@@ -2,13 +2,6 @@
 
 filebeat.inputs: []
 
-#For version 6.x and lower
-#filebeat.registry_file: /var/lib/filebeat/registry
-
-#For version 7 and higher
-# filebeat.registry.path: /var/lib/filebeat
-
-#The following processors are to ensure compatibility with version 7
 processors:
 - rename:
     fields:

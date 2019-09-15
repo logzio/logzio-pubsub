@@ -2,12 +2,12 @@ FROM python:3.7-alpine
 
 ENV PACKAGE=filebeat-7.3.1-linux-x86_64.tar.gz
 
-RUN mkdir -p /usr/local/etc/filebeat && \
+RUN mkdir -p /var/lib/filebeat && \
     mkdir -p /etc/pki/tls/certs
 
-WORKDIR /usr/local/etc/filebeat
+WORKDIR /var/lib/filebeat
 
-COPY requirements.txt /usr/local/etc/filebeat/requirements.txt
+COPY requirements.txt /var/lib/filebeat/requirements.txt
 
 RUN apk add --update --no-cache libc6-compat wget tar && \
 	wget https://artifacts.elastic.co/downloads/beats/filebeat/$PACKAGE && \
@@ -17,10 +17,8 @@ RUN apk add --update --no-cache libc6-compat wget tar && \
     pip install -r requirements.txt && \
     rm requirements.txt
 
-COPY filebeat.yml /usr/local/etc/filebeat/filebeat.yml
-#COPY data.yml /usr/local/etc/filebeat/data.yml
-#COPY credential-file.json /usr/local/etc/filebeat/credential-file.json
-COPY filebeat-yml-script.py /usr/local/etc/filebeat/filebeat-yml-script.py
-#RUN cat /usr/local/etc/filebeat/filebeat.yml
+COPY filebeat.yml /var/lib/filebeat/filebeat.yml
+COPY filebeat-yml-script.py /var/lib/filebeat/filebeat-yml-script.py
 
+RUN chown -R root /var/lib/filebeat/
 CMD ["python","filebeat-yml-script.py"]

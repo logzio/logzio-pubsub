@@ -1,48 +1,55 @@
 import os
 from ruamel.yaml import YAML
-import json
 
-# set vars and consts
+FILEBEAT_CONF_PATH = "/var/lib/filebeat/filebeat.yml"
 
-FILEBEAT_CONF_PATH = "/usr/local/etc/filebeat/filebeat.yml"
 
-def _add_topic():
+def _add_all_topics():
     yaml = YAML()
-    with open("./filebeat.yml", "r") as filebeat_yml:
+
+    dirpath = os.getcwd()
+    print("current directory is : " + dirpath)
+    foldername = os.path.basename(dirpath)
+    print("Directory name is : " + foldername)
+    # todo delete
+
+    with open("filebeat.yml", "r") as filebeat_yml:
         config_dict = yaml.load(filebeat_yml)
 
-    with open("./pubsub-data.yml", "r") as data_yml:
-        pubsub_data_dictionary = yaml.load(data_yml)
+    with open("pubsub-input.yml", "r") as input_yml:
+        pubsub_input = yaml.load(input_yml)
 
-    amount_of_publishers = range(len(pubsub_data_dictionary["logzio-pubsub"]))
-    for publisher_index in amount_of_publishers:
-        amount_of_subscribers = range(len(pubsub_data_dictionary["logzio-pubsub"]["publishers"][publisher_index]["subscriptions"]))
-        for subscriber_index in amount_of_subscribers:
-            subscriber_dict = {
-                "type": "google-pubsub",
-                "project_id": pubsub_data_dictionary["logzio-pubsub"]["publishers"][publisher_index]["project_id"],
-                "topic": pubsub_data_dictionary["logzio-pubsub"]["publishers"][publisher_index]["topic_id"],
-                "credentials_file": pubsub_data_dictionary["logzio-pubsub"]["publishers"][publisher_index][
-                    "credentials_file"],
-                "subscription.name":
-                    pubsub_data_dictionary["logzio-pubsub"]["publishers"][publisher_index]["subscriptions"][
-                        subscriber_index],
-                "fields":
-                    {
-                        "logzio_codec": "JSON",
-                        "token": pubsub_data_dictionary["logzio-pubsub"]["token"],
-                        "type": pubsub_data_dictionary["logzio-pubsub"]["publishers"][publisher_index]["type"],
-                    },
-                "fields_under_root": "true",
-                "encoding": "utf-8"
-            }
+    for publisher in pubsub_input["logzio-pubsub"]["pubsubs"]:
+        for subscriber in publisher["subscriptions"]:
+            subscriber_dict = _add_subscriber(publisher, subscriber)
             config_dict["filebeat.inputs"].append(subscriber_dict)
 
-    config_dict["output"]["logstash"]["hosts"].append("listener.logz.io:5015")
+    config_dict["output"]["logstash"]["hosts"].append(pubsub_input["logzio-pubsub"]["listener"])
 
     with open(FILEBEAT_CONF_PATH, "w+") as filebeat_yml:
         yaml.dump(config_dict, filebeat_yml)
 
-_add_topic()
+
+def _add_subscriber(publisher, subscriber):
+    print(subscriber, publisher)
+    subscriber_dict = {
+        "type": "google-pubsub",
+        "project_id": publisher["project_id"],
+        "topic": publisher["topic_id"],
+        "credentials_file": publisher["credentials_file"],
+        "subscription.name": subscriber,
+        "fields":
+            {
+                "logzio_codec": "JSON",
+                "token": publisher["token"],
+                "type": publisher["type"],
+            },
+        "fields_under_root": "true",
+        "encoding": "utf-8"
+    }
+    return subscriber_dict
+
+
+_add_all_topics()
 
 os.system("./filebeat -e")

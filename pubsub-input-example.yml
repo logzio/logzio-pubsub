@@ -1,0 +1,17 @@
+logzio-pubsub:
+    listener: "listener.logz.io:5015"
+    pubsubs:
+    - project_id: my_project
+      credentials_file: /var/lib/filebeat/credential-file.json
+      token: {LOGZIO-TOKEN}
+      topic_id: my_topic
+      subscriptions: [my_sub, my_sub2, my_sub3]
+      type: google-pubsub
+
+    - project_id: my_project
+      credentials_file: /var/lib/filebeat/credential-file.json
+      token: {LOGZIO-TOKEN}
+      topic_id: my_topic2
+      subscriptions: [my_sub4]
+      type: google-pubsub2
+
