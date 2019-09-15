@@ -58,6 +58,12 @@ logzio-pubsub:
     #and so on...
     
 ```
+### Getting a credentials file
+[Follow these steps](https://medium.com/quintoandar-tech-blog/creating-google-cloud-pub-sub-publishers-and-subscribers-with-spring-cloud-gcp-part-1-setup-a96c53025fec)
+
+//will be more detailed
+
+
 ## logzio-pubsub setup
 
 ### 1. Pull the Docker image
