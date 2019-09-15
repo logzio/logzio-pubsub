@@ -32,22 +32,25 @@ View example in [pubsub-input-example.yml](https://github.com/logzio/logzio-pubs
 
 ```yml
 logzio-pubsub:
-    token: <LOGZIO_ACCOUNT_TOKEN>
-    publishers:
+    listener: <"LISTENER_URL">
+    pubsubs:
     - project_id: <PROJECT-1_ID>
       credentials_file: <PATH/TO/YOUR/FILE/credential-file.json>
+      token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-1_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
 
-   - project_id: <PROJECT-1_ID>
+    - project_id: <PROJECT-1_ID>
       credentials_file: <PATH/TO/YOUR/FILE/credential-file.json>
+      token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-2_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
 
     - project_id: <PROJECT-2_ID>
       credentials_file: <PATH/TO/YOUR/FILE/credential-file.json>
+      token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-1_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
