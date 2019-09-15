@@ -10,7 +10,7 @@ To use this container, you'll need:
 1. A Google Cloud Platform project.
 2. Topics and subscribers to your project, created on Cloud Pub/Sub.
 3. A Sink to export your logs, created on Stackdriver.
-4. A Pub/Sub data YAML file.
+4. A Pub/Sub input YAML file.
 
 To complete these stages please follow the pre-setup. // link to pre-setup section <br/>
 If you already have those go to logzio-pubsub setup. // link to setup section
@@ -23,8 +23,8 @@ If you already have those go to logzio-pubsub setup. // link to setup section
     
 ### Export your logs
  To create a sink to export your logs, [follow these steps](https://cloud.google.com/logging/docs/export/configure_export_v2).<br/> Use Cloud Pub/Sub as the destination.
-### Build your YAML data file
-Build a YAML file called "pubsub-data.yml".<br/>
+### Build your Pub/Sub input YAML file
+Build a YAML file called "pubsub-input.yml".<br/>
 Fill it in the format as follows:<br/>
 For every topic fill in project, topic and subscriptions IDs, as given from Pub/Sub.<br/>
 Get your Logz.io [token](https://app.logz.io/#/dashboard/settings/general).<br/>
