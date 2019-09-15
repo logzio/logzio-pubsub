@@ -28,7 +28,7 @@ Build a YAML file called "pubsub-data.yml".<br/>
 Fill it in the format as follows:<br/>
 For every topic fill in project, topic and subscriptions IDs, as given from Pub/Sub.<br/>
 Get your Logz.io [token](https://app.logz.io/#/dashboard/settings/general).<br/>
-View example in [pubsub-data-example.yml](https://github.com/logzio/logzio-pubsub/blob/develop/pubsub-data-example.yml).
+View example in [pubsub-input-example.yml](https://github.com/logzio/logzio-pubsub/blob/develop/pubsub-input-example.yml).
 
 ```yml
 logzio-pubsub:
@@ -69,8 +69,8 @@ docker pull logzio/logzio-pubsub
 
 ```shell
 docker run --name logzio-pubsub \
--v PATH/TO/YOUR/FILE//pubsub-data.yml:/usr/local/etc/filebeat/pubsub-data.yml \
--v PATH/TO/YOUR/FILE//credential-file.json:/usr/local/etc/filebeat/credential-file.json \
+-v PATH/TO/YOUR/FILE//pubsub-input.yml:/var/lib/filebeat/pubsub-input.yml \
+-v PATH/TO/YOUR/FILE//credential-file.json:/var/lib/filebeat/credential-file.json \
 logzio/logzio-pubsub
 ```
 
