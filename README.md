@@ -10,7 +10,7 @@ To use this container, you'll need:
 1. A Google Cloud Platform project.
 2. Topics and subscribers to your project, created on Cloud Pub/Sub.
 3. A Sink to export your logs, created on Stackdriver.
-4. A Pub/Sub data YAML file.
+4. A Pub/Sub input YAML file.
 
 To complete these stages please follow the pre-setup. // link to pre-setup section <br/>
 If you already have those go to logzio-pubsub setup. // link to setup section
@@ -23,31 +23,34 @@ If you already have those go to logzio-pubsub setup. // link to setup section
     
 ### Export your logs
  To create a sink to export your logs, [follow these steps](https://cloud.google.com/logging/docs/export/configure_export_v2).<br/> Use Cloud Pub/Sub as the destination.
-### Build your YAML data file
-Build a YAML file called "pubsub-data.yml".<br/>
+### Build your Pub/Sub input YAML file
+Build a YAML file called "pubsub-input.yml".<br/>
 Fill it in the format as follows:<br/>
 For every topic fill in project, topic and subscriptions IDs, as given from Pub/Sub.<br/>
 Get your Logz.io [token](https://app.logz.io/#/dashboard/settings/general).<br/>
-View example in [pubsub-data-example.yml](https://github.com/logzio/logzio-pubsub/blob/develop/pubsub-data-example.yml).
+View example in [pubsub-input-example.yml](https://github.com/logzio/logzio-pubsub/blob/develop/pubsub-input-example.yml).
 
 ```yml
 logzio-pubsub:
-    token: <LOGZIO_ACCOUNT_TOKEN>
-    publishers:
+    listener: <"LISTENER_URL">
+    pubsubs:
     - project_id: <PROJECT-1_ID>
       credentials_file: <PATH/TO/YOUR/FILE/credential-file.json>
+      token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-1_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
 
-   - project_id: <PROJECT-1_ID>
+    - project_id: <PROJECT-1_ID>
       credentials_file: <PATH/TO/YOUR/FILE/credential-file.json>
+      token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-2_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
 
     - project_id: <PROJECT-2_ID>
       credentials_file: <PATH/TO/YOUR/FILE/credential-file.json>
+      token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-1_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
@@ -69,8 +72,8 @@ docker pull logzio/logzio-pubsub
 
 ```shell
 docker run --name logzio-pubsub \
--v PATH/TO/YOUR/FILE//data.yml:/usr/local/etc/filebeat/data.yml \
--v PATH/TO/YOUR/FILE//credential-file.json:/usr/local/etc/filebeat/credential-file.json \
+-v PATH/TO/YOUR/FILE//pubsub-input.yml:/var/lib/filebeat/pubsub-input.yml \
+-v PATH/TO/YOUR/FILE//credential-file.json:/var/lib/filebeat/credential-file.json \
 logzio/logzio-pubsub
 ```
 
