@@ -1,10 +1,7 @@
 # logzio-pubsub
 
 logzio-pubsub is a Docker container that uses Filebeat to collect logs from Google Cloud Platform through Pub/Sub and forward those logs to your Logz.io account.
-<br/>/*
-logzio-pubsub mounts docker.sock and the Docker logs directory to the container itself, allowing Filebeat to collect the logs and metadata.
 <br/>
-logzio-pubsub ships logs only. */<br/>
 
 To use this container, you'll need:
 1. A Google Cloud Platform project.
