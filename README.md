@@ -4,10 +4,11 @@ logzio-pubsub is a Docker container that uses Filebeat to collect logs from Goog
 <br/>
 
 To use this container, you'll need:
-1. A Google Cloud Platform project.
-2. Topics and subscribers to your project, created on Cloud Pub/Sub.
-3. A Sink to export your logs, created on Stackdriver.
-4. A Pub/Sub input YAML file.
+1. Google Cloud SDK installed.
+2. A Google Cloud Platform project.
+3. Topics and subscribers to your project, created on Cloud Pub/Sub.
+4. A Sink to export your logs, created on Stackdriver.
+5. A Pub/Sub input YAML file.
 
 To complete these stages please follow the pre-setup. // link to pre-setup section <br/>
 If you already have those go to logzio-pubsub setup. // link to setup section
@@ -15,11 +16,18 @@ If you already have those go to logzio-pubsub setup. // link to setup section
 ## Pre-setup
 
 ### Quickstart with Cloud Pub/Sub
+  Make sure you have Google Cloud SDK.
+  If you don't, [follow these steps](https://cloud.google.com/sdk/docs/downloads-versioned-archives).
+
+  If gcloud isn't recognized run:
+  ```source '[path-to-my-home]/google-cloud-sdk/path.bash.inc'```
+
   Read about [Cloud Pub/Sub](https://cloud.google.com/pubsub/docs/overview).<br/>
   To create Cloud Pub/Sub topics and subscribers to your GCP project, [follow these steps](https://cloud.google.com/pubsub/docs/quickstart-console).<br/>
     
 ### Export your logs
  To create a sink to export your logs, [follow these steps](https://cloud.google.com/logging/docs/export/configure_export_v2).<br/> Use Cloud Pub/Sub as the destination.
+ 
 ### Build your Pub/Sub input YAML file
 Build a YAML file called "pubsub-input.yml".<br/>
 Fill it in the format as follows:<br/>
@@ -32,21 +40,24 @@ logzio-pubsub:
     listener: <"LISTENER_URL">
     pubsubs:
     - project_id: <PROJECT-1_ID>
-      credentials_file: <PATH/TO/YOUR/FILE/credential-file.json>
+      #If you already a credentials file, uncomment the next line and fill path: 
+      #credentials_file: <PATH/TO/YOUR/FILE/cred-<PROJECT-1_ID>.json> 
       token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-1_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
 
     - project_id: <PROJECT-1_ID>
-      credentials_file: <PATH/TO/YOUR/FILE/credential-file.json>
+      #If you already a credentials file, uncomment the next line and fill path: 
+      #credentials_file: <PATH/TO/YOUR/FILE/cred-<PROJECT-1_ID>.json> ####leave empty if you don't credentials file
       token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-2_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
 
     - project_id: <PROJECT-2_ID>
-      credentials_file: <PATH/TO/YOUR/FILE/credential-file.json>
+      #If you already a credentials file, uncomment the next line and fill path: 
+      #credentials_file: <PATH/TO/YOUR/FILE/cred-<PROJECT-2_ID>.json> ####leave empty if you don't credentials file
       token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-1_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
@@ -55,10 +66,12 @@ logzio-pubsub:
     #and so on...
     
 ```
-### Getting a credentials file
-[Follow these steps](https://medium.com/quintoandar-tech-blog/creating-google-cloud-pub-sub-publishers-and-subscribers-with-spring-cloud-gcp-part-1-setup-a96c53025fec)
+### Get your project's credentials file
 
-//will be more detailed
+
+
+Now, to get your project's credentias file run [Makefile]():
+```make PROJECT_ID=true-river-251114```
 
 
 ## logzio-pubsub setup
