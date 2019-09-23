@@ -2,16 +2,11 @@ import os
 from ruamel.yaml import YAML
 
 FILEBEAT_CONF_PATH = "/var/lib/filebeat/filebeat.yml"
+credentials_files = {}
 
 
 def _add_all_topics():
     yaml = YAML()
-
-    dirpath = os.getcwd()
-    print("current directory is : " + dirpath)
-    foldername = os.path.basename(dirpath)
-    print("Directory name is : " + foldername)
-    # todo delete
 
     with open("filebeat.yml", "r") as filebeat_yml:
         config_dict = yaml.load(filebeat_yml)
@@ -31,10 +26,11 @@ def _add_all_topics():
 
 
 def _add_subscriber(publisher, subscriber):
-    print(subscriber, publisher)
+    project_id = publisher["project_id"]
+
     subscriber_dict = {
         "type": "google-pubsub",
-        "project_id": publisher["project_id"],
+        "project_id": project_id,
         "topic": publisher["topic_id"],
         "credentials_file": publisher["credentials_file"],
         "subscription.name": subscriber,
