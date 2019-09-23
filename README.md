@@ -28,6 +28,12 @@ If you already have those go to logzio-pubsub setup. // link to setup section
 ### Export your logs
  To create a sink to export your logs, [follow these steps](https://cloud.google.com/logging/docs/export/configure_export_v2).<br/> Use Cloud Pub/Sub as the destination.
  
+### Build your credentials file
+Download the file [Makefile](https://github.com/logzio/logzio-pubsub/blob/develop/Makefile) and run:<br/>
+ ```make PROJECT_ID=<project_id>```<br/>
+Credentials-file.json has been created in your local path.<br/>
+To support multiple projects repeat with every project id.
+ 
 ### Build your Pub/Sub input YAML file
 Build a YAML file called "pubsub-input.yml".<br/>
 Fill it in the format as follows:<br/>
@@ -40,24 +46,21 @@ logzio-pubsub:
     listener: <"LISTENER_URL">
     pubsubs:
     - project_id: <PROJECT-1_ID>
-      #If you already a credentials file, uncomment the next line and fill path: 
-      #credentials_file: <PATH/TO/YOUR/FILE/cred-<PROJECT-1_ID>.json> 
+      credentials_file: <PATH/TO/YOUR/FILE/credentials-file.json> 
       token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-1_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
 
     - project_id: <PROJECT-1_ID>
-      #If you already a credentials file, uncomment the next line and fill path: 
-      #credentials_file: <PATH/TO/YOUR/FILE/cred-<PROJECT-1_ID>.json> ####leave empty if you don't credentials file
+      credentials_file: <PATH/TO/YOUR/FILE/credentials-file.json> 
       token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-2_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
 
     - project_id: <PROJECT-2_ID>
-      #If you already a credentials file, uncomment the next line and fill path: 
-      #credentials_file: <PATH/TO/YOUR/FILE/cred-<PROJECT-2_ID>.json> ####leave empty if you don't credentials file
+      credentials_file: <PATH/TO/YOUR/FILE/credentials-file.json> 
       token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-1_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
@@ -66,14 +69,6 @@ logzio-pubsub:
     #and so on...
     
 ```
-### Get your project's credentials file
-
-
-
-Now, to get your project's credentias file run [Makefile]():
-```make PROJECT_ID=true-river-251114```
-
-
 ## logzio-pubsub setup
 
 ### 1. Pull the Docker image
@@ -88,8 +83,8 @@ docker pull logzio/logzio-pubsub
 
 ```shell
 docker run --name logzio-pubsub \
--v PATH/TO/YOUR/FILE//pubsub-input.yml:/var/lib/filebeat/pubsub-input.yml \
--v PATH/TO/YOUR/FILE//credential-file.json:/var/lib/filebeat/credential-file.json \
+-v PATH/TO/YOUR/FILE/pubsub-input.yml:/var/lib/filebeat/pubsub-input.yml \
+-v PATH/TO/YOUR/FILE/credential-file.json:/var/lib/filebeat/credential-file.json \
 logzio/logzio-pubsub
 ```
 
