@@ -5,6 +5,7 @@ SERVICE_ACCOUNT_NAME=credentials-file
 all: add-iam-policy publisher subscriber create-file
 
 add-iam-policy:
+	@echo "###Creating iam service-account for ${SERVICE_ACCOUNT_NAME}"
 	gcloud iam service-accounts create ${SERVICE_ACCOUNT_NAME}
 
 publisher:

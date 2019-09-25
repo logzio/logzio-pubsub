@@ -1,27 +1,25 @@
-FROM python:3.7-alpine
+FROM python:3.7-slim
 
 ENV PACKAGE=filebeat-7.3.1-linux-x86_64.tar.gz
+WORKDIR /logzio-pubsub
 
-RUN mkdir -p /var/lib/filebeat && \
+RUN mkdir -p /logzio-pubsub && \
     mkdir -p /etc/pki/tls/certs
 
-WORKDIR /var/lib/filebeat
+COPY requirements.txt /logzio-pubsub/requirements.txt
+COPY filebeat.yml /logzio-pubsub/filebeat.yml
+COPY filebeat-yml-script.py  /logzio-pubsub/filebeat-yml-script.py
 
-COPY requirements.txt /var/lib/filebeat/requirements.txt
-
-RUN apk add --update --no-cache libc6-compat wget tar && \
-    apk add --update make && \
-    wget https://artifacts.elastic.co/downloads/beats/filebeat/$PACKAGE && \
-    tar --strip-components=1 -zxf "$PACKAGE" && \
-    rm -f "$PACKAGE" && \
+RUN apt-get update && \
+    apt-get install -y \
+    curl \
+    wget && \
+    curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.3.2-amd64.deb && \
+    dpkg -i filebeat-7.3.2-amd64.deb && \
     wget -P /etc/pki/tls/certs/ https://raw.githubusercontent.com/logzio/public-certificates/master/COMODORSADomainValidationSecureServerCA.crt && \
     pip install -r requirements.txt && \
     rm requirements.txt
 
-COPY filebeat.yml /var/lib/filebeat/filebeat.yml
-COPY filebeat-yml-script.py /var/lib/filebeat/filebeat-yml-script.py
-
-RUN chown -R root /var/lib/filebeat/
 CMD ["python","filebeat-yml-script.py"]
 
 

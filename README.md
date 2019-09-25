@@ -39,6 +39,7 @@ Build a YAML file called "pubsub-input.yml".<br/>
 Fill it in the format as follows:<br/>
 For every topic fill in project, topic and subscriptions IDs, as given from Pub/Sub.<br/>
 Get your Logz.io [token](https://app.logz.io/#/dashboard/settings/general).<br/>
+Get your Logz.io [listener url](https://docs.logz.io/user-guide/accounts/account-region.html), according to your region.<br/>
 View example in [pubsub-input-example.yml](https://github.com/logzio/logzio-pubsub/blob/develop/pubsub-input-example.yml).
 
 ```yml
@@ -46,21 +47,21 @@ logzio-pubsub:
     listener: <"LISTENER_URL">
     pubsubs:
     - project_id: <PROJECT-1_ID>
-      credentials_file: <PATH/TO/YOUR/FILE/credentials-file.json> 
+      credentials_file: /logzio-pubsub/credentials-file.json 
       token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-1_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
 
     - project_id: <PROJECT-1_ID>
-      credentials_file: <PATH/TO/YOUR/FILE/credentials-file.json> 
+      credentials_file: /logzio-pubsub/credentials-file.json
       token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-2_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
       type: <name your log type as a key>
 
     - project_id: <PROJECT-2_ID>
-      credentials_file: <PATH/TO/YOUR/FILE/credentials-file.json> 
+      credentials_file: /logzio-pubsub/credentials-file-2.json 
       token: <LOGZIO_ACCOUNT_TOKEN>
       topic_id: <TOPIC-1_ID>
       subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
@@ -83,8 +84,8 @@ docker pull logzio/logzio-pubsub
 
 ```shell
 docker run --name logzio-pubsub \
--v PATH/TO/YOUR/FILE/pubsub-input.yml:/var/lib/filebeat/pubsub-input.yml \
--v PATH/TO/YOUR/FILE/credentials-file.json:/var/lib/filebeat/credentials-file.json \
+-v PATH/TO/YOUR/FILE/pubsub-input.yml:/logzio-pubsub/pubsub-input.yml \
+-v PATH/TO/YOUR/FILE/credentials-file.json:/logzio-pubsub/credentials-file.json \
 logzio/logzio-pubsub
 ```
 
