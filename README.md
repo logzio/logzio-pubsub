@@ -1,78 +1,92 @@
-# logzio-pubsub
+# Pub/Sub to Logz.io
 
-logzio-pubsub is a Docker container that uses Filebeat to collect logs from Google Cloud Platform through Pub/Sub and forward those logs to your Logz.io account.
-<br/>
+## Setup
 
-To use this container, you'll need:
-1. Google Cloud SDK installed.
-2. A Google Cloud Platform project.
-3. Topics and subscribers to your project, created on Cloud Pub/Sub.
-4. A Sink to export your logs, created on Stackdriver.
-5. A Pub/Sub input YAML file.
+Google Cloud Platform (GCP) Stackdriver collects logs and metrics from your cloud services.
+You can use Google Cloud Pub/Sub to forward your logs from Stackdriver to Logz.io.
 
-To complete these stages please follow the pre-setup. // link to pre-setup section <br/>
-If you already have those go to logzio-pubsub setup. // link to setup section
+### Configuration
 
-## Pre-setup
+**You'll need**:
+[Google Cloud SDK](https://cloud.google.com/sdk/docs/quickstarts),
+[a GCP project](https://console.cloud.google.com/projectcreate),
+[a GCP Pub/Sub topic and subscribers](https://cloud.google.com/pubsub/docs/quickstart-console) to your GCP project
 
-### Quickstart with Cloud Pub/Sub
-  Make sure you have Google Cloud SDK.
-  If you don't, [follow these steps](https://cloud.google.com/sdk/docs/downloads-versioned-archives).
+#### 1.  Export your logs to Pub/Sub
 
-  If gcloud isn't recognized run:
-  ```source '[path-to-my-home]/google-cloud-sdk/path.bash.inc'```
+Set up a sink to export your logs to Pub/Sub.
 
-  Read about [Cloud Pub/Sub](https://cloud.google.com/pubsub/docs/overview).<br/>
-  To create Cloud Pub/Sub topics and subscribers to your GCP project, [follow these steps](https://cloud.google.com/pubsub/docs/quickstart-console).<br/>
-    
-### Export your logs
- To create a sink to export your logs, [follow these steps](https://cloud.google.com/logging/docs/export/configure_export_v2).<br/> Use Cloud Pub/Sub as the destination.
- 
-### Build your credentials file
-Download the file [Makefile](https://github.com/logzio/logzio-pubsub/blob/develop/Makefile) and run:<br/>
- ```make PROJECT_ID=<project_id>```<br/>
-Credentials-file.json has been created in your local path.<br/>
-To support multiple projects repeat with every project id.
- 
-### Build your Pub/Sub input YAML file
-Build a YAML file called "pubsub-input.yml".<br/>
-Fill it in the format as follows:<br/>
-For every topic fill in project, topic and subscriptions IDs, as given from Pub/Sub.<br/>
-Get your Logz.io [token](https://app.logz.io/#/dashboard/settings/general).<br/>
-Get your Logz.io [listener url](https://docs.logz.io/user-guide/accounts/account-region.html), according to your region.<br/>
-View example in [pubsub-input-example.yml](https://github.com/logzio/logzio-pubsub/blob/develop/pubsub-input-example.yml).
+For more information, see [Exporting with the Logs Viewer](https://cloud.google.com/logging/docs/export/configure_export_v2) from Google Cloud.
 
-```yml
-logzio-pubsub:
-    listener: <"LISTENER_URL">
-    pubsubs:
-    - project_id: <PROJECT-1_ID>
-      credentials_file: /logzio-pubsub/credentials-file.json 
-      token: <LOGZIO_ACCOUNT_TOKEN>
-      topic_id: <TOPIC-1_ID>
-      subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
-      type: <name your log type as a key>
+#### 2.  Build your credentials file
 
-    - project_id: <PROJECT-1_ID>
-      credentials_file: /logzio-pubsub/credentials-file.json
-      token: <LOGZIO_ACCOUNT_TOKEN>
-      topic_id: <TOPIC-2_ID>
-      subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
-      type: <name your log type as a key>
+Make a folder for the files you'll be working with.
 
-    - project_id: <PROJECT-2_ID>
-      credentials_file: /logzio-pubsub/credentials-file-2.json 
-      token: <LOGZIO_ACCOUNT_TOKEN>
-      topic_id: <TOPIC-1_ID>
-      subscriptions: <SUB1_ID, SUB2_ID, SUB3_ID, ...>
-      type: <name your log type as a key>
-
-    #and so on...
-    
+```shell
+mkdir logzio-pubsub && cd logzio-pubsub
 ```
-## logzio-pubsub setup
 
-### 1. Pull the Docker image
+Build your credentials file using your Google Cloud project ID.
+
+```shell
+wget https://raw.githubusercontent.com/logzio/logzio-pubsub/master/Makefile \
+&& make PROJECT_ID=<project_id>
+```
+
+Run this command for each project you're working with.
+
+#### 3.  Build your Pub/Sub input YAML file
+
+Make `pubsub-input.yml`, which will hold your Pub/Sub input configuration.
+
+```shell
+touch pubsub-input.yml
+```
+
+Open `pubsub-input.yml` in your text editor, and paste this code block.
+
+Complete configuration instructions are below the code block. 👇
+
+```yaml
+logzio-pubsub:
+listener: <<LISTENER-HOST>>
+
+pubsubs:
+- project_id: PROJECT-1_ID
+credentials_file: ./credentials-file.json
+token: <<SHIPPING-TOKEN>>
+topic_id: TOPIC-1_ID
+subscriptions: ["SUB1_ID", "SUB2_ID", "SUB3_ID"]
+type: stackdriver
+
+- project_id: PROJECT-1_ID
+credentials_file: ./credentials-file.json
+token: <<SHIPPING-TOKEN>>
+topic_id: TOPIC-2_ID
+subscriptions: ["SUB1_ID", "SUB2_ID", "SUB3_ID"]
+type: stackdriver
+
+- project_id: PROJECT-3_ID
+credentials_file: ./credentials-file.json
+token: <<SHIPPING-TOKEN>>
+topic_id: TOPIC-1_ID
+subscriptions: ["SUB1_ID", "SUB2_ID", "SUB3_ID"]
+type: stackdriver
+```
+
+**Configuration instructions**
+
+For extra guidance,
+please see the [sample configuration YAML](https://github.com/logzio/logzio-pubsub/blob/master/pubsub-input-example.yml).
+{:.info-box.note}
+
+| Parameter | Description |
+|---|---|
+| listener | The Logz.io listener host. <br>Replace `<<LISTENER-HOST>>` with your region's listener host (for example, `listener.logz.io`). For more information on finding your account's region, see [Account region](https://docs.logz.io/user-guide/accounts/account-region.html). |
+| pubsubs | This is an array of one or more GCP subscriptions.For each subscription, provide topic and subscriptions IDs, as given from Pub/Sub. |
+| token | Your Logz.io shipping token.Include this with each project under `pubsubs`. <br>Replace `<<SHIPPING-TOKEN>>` with the [token](https://app.logz.io/#/dashboard/settings/general) of the account you want to ship to. |
+
+#### 4.  Pull the Docker image
 
 Download the logzio/logzio-pubsub image:
 
@@ -80,15 +94,22 @@ Download the logzio/logzio-pubsub image:
 docker pull logzio/logzio-pubsub
 ```
 
-### 2. Run the container
+#### 5.  Run the container
+
+Run this command from `logzio-pubsub/`,
+where you stored `pubsub-input.yml`
+and `credentials-file.json`.
 
 ```shell
 docker run --name logzio-pubsub \
--v PATH/TO/YOUR/FILE/pubsub-input.yml:/logzio-pubsub/pubsub-input.yml \
--v PATH/TO/YOUR/FILE/credentials-file.json:/logzio-pubsub/credentials-file.json \
+-v ./pubsub-input.yml:/var/lib/filebeat/pubsub-input.yml \
+-v ./credentials-file.json:/var/lib/filebeat/credentials-file.json \
 logzio/logzio-pubsub
 ```
 
-### 3. Check Logz.io for your logs
+#### 6.  Check Logz.io for your logs
 
-Spin up your Docker containers if you haven’t done so already. Give your logs a few minutes to get from your system to ours, and then open [Kibana](https://app.logz.io/#/dashboard/kibana).
+Spin up your Docker containers if you haven’t done so already.
+
+Give your logs some time to get from your system to ours,
+and then open [Kibana](https://app.logz.io/#/dashboard/kibana).
