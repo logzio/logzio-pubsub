@@ -102,8 +102,8 @@ and `credentials-file.json`.
 
 ```shell
 docker run --name logzio-pubsub \
--v ./pubsub-input.yml:/logzio-pubsub/pubsub-input.yml \
--v ./credentials-file.json:/logzio-pubsub/credentials-file.json \
+-v PATH/TO/YOUR/FILE/pubsub-input.yml:/logzio-pubsub/pubsub-input.yml \
+-v PATH/TO/YOUR/FILE/credentials-file.json:/logzio-pubsub/credentials-file.json \
 logzio/logzio-pubsub
 ```
 
