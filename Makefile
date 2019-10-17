@@ -2,7 +2,7 @@
 # Plugin parameters
 SERVICE_ACCOUNT_NAME=credentials-file
 
-all: add-iam-policy publisher subscriber create-file
+all: add-iam-policy publisher subscriber editor create-file
 
 add-iam-policy:
 	@echo "###Creating iam service-account for ${SERVICE_ACCOUNT_NAME}"
@@ -19,6 +19,12 @@ subscriber:
 	gcloud projects add-iam-policy-binding ${PROJECT_ID}\
     --member "serviceAccount:${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"\
     --role "roles/pubsub.subscriber"
+
+editor:
+	@echo "### Adding editor's role file for project ${PROJECT_ID}"
+	gcloud projects add-iam-policy-binding ${PROJECT_ID}\
+    --member "serviceAccount:${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"\
+    --role "roles/editor"
 
 create-file:
 	@echo "### Creating credentials file for project ${PROJECT_ID}"
