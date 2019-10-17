@@ -8,7 +8,7 @@ processors:
      - from: "agent"
        to: "beat_agent"
     ignore_missing: true
-- rename:
+- rename:sublime file
     fields:
      - from: "log.file.path"
        to: "source"

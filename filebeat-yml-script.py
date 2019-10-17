@@ -37,7 +37,7 @@ def _add_subscriber(publisher, subscriber):
         "subscription.name": subscriber,
         "fields":
             {
-                "logzio_codec": "JSON",
+                "logzio_codec": "json",
                 "token": publisher["token"],
                 "type": publisher.get("type", "google-pubsub"),
             },
