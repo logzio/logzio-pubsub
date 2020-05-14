@@ -54,7 +54,7 @@ In the left menu, select **IAM & admin > Service accounts**.
 At the top of the _Service accounts_ page, click **+ CREATE SERVICE ACCOUNT**.
 
 Give a descriptive **Service account name**, such as "credentials file".
-Click **CREATE** to continue to the _Service account permissions_ page.
+Click **CREATE** to continue to the _IAM/permissions_ page.
 
 Add these roles:
 
@@ -146,5 +146,10 @@ Spin up your Docker containers if you haven’t done so already.
 
 Give your logs some time to get from your system to ours,
 and then open [Kibana](https://app.logz.io/#/dashboard/kibana).
+
+## Change log
+0.0.5:
+   - Updated a new public SSL certificate.
+
 
 </div>
