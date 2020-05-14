@@ -16,9 +16,10 @@ RUN apt-get update && \
     wget && \
     curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.3.2-amd64.deb && \
     dpkg -i filebeat-7.3.2-amd64.deb && \
-    wget -P /etc/pki/tls/certs/ https://raw.githubusercontent.com/logzio/public-certificates/master/COMODORSADomainValidationSecureServerCA.crt && \
+    wget -P /etc/pki/tls/certs/ https://raw.githubusercontent.com/logzio/public-certificates/master/TrustExternalCARoot_and_USERTrustRSAAAACA.crt && \
     pip install -r requirements.txt && \
     rm requirements.txt
+
 
 CMD ["python","filebeat-yml-script.py"]
 
