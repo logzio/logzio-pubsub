@@ -2,6 +2,8 @@ import os
 from ruamel.yaml import YAML
 
 FILEBEAT_CONF_PATH = "/etc/filebeat/filebeat.yml"
+PUBSUB_INPUT_PATH = os.environ.get("PUBSUB_INPUT_PATH", "pubsub-input.yaml")
+
 credentials_files = {}
 
 
@@ -11,7 +13,7 @@ def _add_all_topics():
     with open("filebeat.yml", "r") as filebeat_yml:
         config_dict = yaml.load(filebeat_yml)
 
-    with open("pubsub-input.yml", "r") as input_yml:
+    with open(PUBSUB_INPUT_PATH, "r") as input_yml:
         pubsub_input = yaml.load(input_yml)
 
     for publisher in pubsub_input["pubsubs"]:
