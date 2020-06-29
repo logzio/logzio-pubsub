@@ -85,28 +85,28 @@ Open `pubsub-input.yml` in your text editor, and paste this code block.
 Complete configuration instructions are below the code block. 👇
 
 ```yaml
-listener: <<LISTENER-HOST>>
+listener: "LISTENER-HOST"
 pubsubs:
- - project_id: PROJECT-1_ID
-   topic_id: TOPIC-1_ID
-   token: <<SHIPPING-TOKEN>>
-   credentials_file: ./credentials-file.json
-   subscriptions: ["SUB1_ID", "SUB2_ID", "SUB3_ID"]
-   type: stackdriver
+    - project_id: PROJECT-1_ID
+      topic_id: TOPIC-1_ID
+      token: <<SHIPPING-TOKEN>>
+      credentials_file: ./credentials-file.json
+      subscriptions: ["SUB1_ID", "SUB2_ID", "SUB3_ID"]
+      type: stackdriver
 
- - project_id: PROJECT-1_ID
-   topic_id: TOPIC-2_ID
-   token: <<SHIPPING-TOKEN>>
-   credentials_file: ./credentials-file.json
-   subscriptions: ["SUB1_ID", "SUB2_ID", "SUB3_ID"]
-   type: stackdriver
+    - project_id: PROJECT-1_ID
+      topic_id: TOPIC-2_ID
+      token: <<SHIPPING-TOKEN>>
+      credentials_file: ./credentials-file.json
+      subscriptions: ["SUB1_ID", "SUB2_ID", "SUB3_ID"]
+      type: stackdriver
 
- - project_id: PROJECT-3_ID
-   topic_id: TOPIC-1_ID
-   token: <<SHIPPING-TOKEN>>
-   credentials_file: ./credentials-file.json
-   subscriptions: ["SUB1_ID", "SUB2_ID", "SUB3_ID"]
-   type: stackdriver
+    - project_id: PROJECT-3_ID
+      topic_id: TOPIC-1_ID
+      token: <<SHIPPING-TOKEN>>
+      credentials_file: ./credentials-file.json
+      subscriptions: ["SUB1_ID", "SUB2_ID", "SUB3_ID"]
+      type: stackdriver
 ```
 
 ###### Configuration instructions
