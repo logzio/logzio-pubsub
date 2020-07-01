@@ -18,14 +18,12 @@ def _add_all_topics():
         for subscriber in publisher["subscriptions"]:
             subscriber_dict = _add_subscriber(publisher, subscriber)
             config_dict["filebeat.inputs"].append(subscriber_dict)
-
     try:
         listener = pubsub_input["listener"] + ":5015"
-        if listener.includes('<<LISTENER-HOST>>'):
+        if listener.startswith("<<LISTENER-HOST>>"):
             raise Exception(error_msg)
     except Exception:
         raise Exception(error_msg)
-
     config_dict["output"]["logstash"]["hosts"].append(listener)
     print("this is our listener: " + listener)
     with open(FILEBEAT_CONF_PATH, "w+") as filebeat_yml:
