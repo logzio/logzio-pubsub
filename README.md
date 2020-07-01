@@ -108,6 +108,7 @@ pubsubs:
    subscriptions: ["SUB1_ID", "SUB2_ID", "SUB3_ID"]
    type: stackdriver
 ```
+** Note that YAML files are sensitive to spaces and tabs. We recommend using a YAML validator to make sure that the file structure is correct.
 
 ###### Configuration instructions
 
