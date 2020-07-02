@@ -128,7 +128,7 @@ docker pull logzio/logzio-pubsub
 
 ##### 5. Run the container
 
-Run this command from `logzio-pubsub/`,
+Run this command from `logzio-stackdriver/`,
 where you stored `pubsub-input.yml`
 and `credentials-file.json`.
 
@@ -147,6 +147,9 @@ Give your logs some time to get from your system to ours,
 and then open [Kibana](https://app.logz.io/#/dashboard/kibana).
 
 ## Change log
+0.0.6:
+   - Fixed multiple listeners option.
+
 0.0.5:
    - Updated a new public SSL certificate.
 
