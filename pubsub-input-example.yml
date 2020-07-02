@@ -1,4 +1,4 @@
-listener: "listener.logz.io"
+listener: listener.logz.io
 pubsubs:
     - project_id: my_project
       credentials_file: /logzio-pubsub/credentials-file.json
@@ -12,5 +12,5 @@ pubsubs:
       token: {LOGZIO-TOKEN}
       topic_id: my_topic2
       subscriptions: [my_sub4]
-      type:
+      type: google-pubsub
 

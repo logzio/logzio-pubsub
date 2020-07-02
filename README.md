@@ -108,12 +108,13 @@ pubsubs:
    subscriptions: ["SUB1_ID", "SUB2_ID", "SUB3_ID"]
    type: stackdriver
 ```
+** Note that YAML files are sensitive to spaces and tabs. We recommend using a YAML validator to make sure that the file structure is correct.
 
 ###### Configuration instructions
 
 | Parameter | Description |
 |---|---|
-| listener | The Logz.io listener host. <br> Replace `<<LISTENER-HOST>>` with your region's listener host (for example, `listener.logz.io`). For more information on finding your account's region, see [Account region](https://docs.logz.io/user-guide/accounts/account-region.html). |
+| listener | The Logz.io listener host. (Default value: `listener.logz.io`) <br> Replace `<<LISTENER-HOST>>` with your region's listener host. For more information on finding your account's region, see [Account region](https://docs.logz.io/user-guide/accounts/account-region.html). |
 | pubsubs | This is an array of one or more GCP subscriptions. For each subscription, provide topic and subscriptions IDs, as given from Pub/Sub. |
 | token | Your Logz.io shipping token. Include this with each project under `pubsubs`. <br> Replace `<<SHIPPING-TOKEN>>` with the [token](https://app.logz.io/#/dashboard/settings/general) of the account you want to ship to. |
 
@@ -127,7 +128,7 @@ docker pull logzio/logzio-pubsub
 
 ##### 5. Run the container
 
-Run this command from `logzio-pubsub/`,
+Run this command from `logzio-stackdriver/`,
 where you stored `pubsub-input.yml`
 and `credentials-file.json`.
 
@@ -146,6 +147,9 @@ Give your logs some time to get from your system to ours,
 and then open [Kibana](https://app.logz.io/#/dashboard/kibana).
 
 ## Change log
+0.0.6:
+   - Fixed multiple listeners option.
+
 0.0.5:
    - Updated a new public SSL certificate.
 
