@@ -52,7 +52,7 @@ wget https://raw.githubusercontent.com/logzio/logzio-pubsub/master/create_creden
 ```
 
 Run this command for each project you're working with.  
-**Important note: If you are renaming the file please follow [these steps]() as well.
+**Important note: If you are renaming the file please follow [these steps](#cred-info) as well.
 
 
 </div>
@@ -79,7 +79,7 @@ Select **JSON** and click **CREATE** to save the private key to your machine.
 * Rename it in the following format: '<<project-id>>-credentials.json' - replace to your project id.  
 Move it to the `~/logzio-pubsub` folder you've created
 at the beginning of this step.  
-**Important note: If you are naming it differently please follow [these steps]() as well.
+**Important note: If you are naming it differently please follow [these steps](#cred-info) as well.
 
 </div>
 
@@ -158,9 +158,9 @@ and then open [Kibana](https://app.logz.io/#/dashboard/kibana).
 <div id="cred-info">
 
 ####  Information about the credentials file
-When creating the credentials file through the [command line](#ceredentials_cmd) your credentials file is named by default in the following format:  
+When creating the credentials file through the [command line](#credentials-cmd) your credentials file is named by default in the following format:  
 '<<project_id>>-credentials.json'.  
-When creating the credentials file through the [gcp console](#credentials_console) you are requested to name the file in that format.  
+When creating the credentials file through the [gcp console](#credentials-console) you are requested to name the file in that format.  
 In both cases, if you wish to name it differently please follow these instructions:
 1. On step 3 - building your 'pubsub-input.yml' file, please add the field 'credentials_file' with your credentials file's name as the value.
 For an example of adding this field go to [input example file](https://github.com/logzio/logzio-pubsub/blob/master/pubsub-input-example.yml).
@@ -171,7 +171,7 @@ and replace '<credentials-file-name>' with your credentials file's name.
 
 ## Change log
 0.0.7:
-   - Updated creating credentials script and automated naming of credentials-file for 'pubsub-input.yml' file.
+   - Updated creating credentials script and automated naming of credentials files for 'pubsub-input.yml' file.
 
 0.0.6:
    - Fixed multiple listeners option.
