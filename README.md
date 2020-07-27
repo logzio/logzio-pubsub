@@ -22,10 +22,11 @@ from Google Cloud.
 
 ##### 2. Build your credentials file
 
-Create a working directory for this step and `cd` into it, run as root.
+Create a working directory for this step and `cd` into it.
+Please run this command as root:
 
 ```shell
-mkdir ~/logzio-pubsub && cd ~/logzio-pubsub
+mkdir /etc/logzio-pubsub && cd /etc/logzio-pubsub
 ```
 
 You'll need to build a credentials file so Pub/Sub can authenticate
@@ -41,8 +42,8 @@ You can build it through:
 
 Build your credentials file using your Google Cloud project ID.  
 Before you begin make sure your 'gcloud' cli is installed. If not, execute the following:
-  1. Download the 'google-cloud-sdk' to '~/logzio-pubsub'
-  2. Run  ```~/logzio-pubsub/google-cloud-sdk/install.sh```
+  1. Download the 'google-cloud-sdk' to '/etc/logzio-pubsub'
+  2. Run  ```etc/logzio-pubsub/google-cloud-sdk/install.sh```
  
 Then replace '<project_id>' with your project id and run:
 
@@ -77,7 +78,7 @@ Select **JSON** and click **CREATE** to save the private key to your machine.
 * Click **DONE** to return to the _Service accounts_ page.
 
 * Rename it in the following format: '<<project-id>>-credentials.json' - replace to your project id.  
-Move it to the `~/logzio-pubsub` folder you've created
+Move it to the `/etc/logzio-pubsub` folder you've created
 at the beginning of this step.  
 **Important note: If you are naming it differently please follow [these steps](#cred-info) as well.
 
@@ -85,10 +86,10 @@ at the beginning of this step.
 
 ##### 3. Build your Pub/Sub input YAML file
 
-Make `pubsub-input.yml`, which will hold your Pub/Sub input configuration.
-
+Make `pubsub-input.yml`, which will hold your Pub/Sub input configuration.  
+Please run this command as root:
 ```shell
-touch ~/logzio-pubsub/pubsub-input.yml && open ~/logzio-pubsub/pubsub-input.yml
+touch /etc/logzio-pubsub/pubsub-input.yml && open /etc/logzio-pubsub/pubsub-input.yml
 ```
 Paste this code block to your opened file and complete the configuration instructions. 👇
 
@@ -144,10 +145,14 @@ and insert your project id instead of the parameters.
 
 ```shell
 docker run --name logzio-pubsub \
--v ~/logzio-pubsub/pubsub-input.yml:/logzio-pubsub/pubsub-input.yml \
--v ~/logzio-pubsub/<<PROJECT_ID>>-credentials.json:/logzio-pubsub/<<PROJECT_ID>>-credentials.json \
+-v /etc/logzio-pubsub/pubsub-input.yml:/logzio-pubsub/pubsub-input.yml \
+-v /etc/logzio-pubsub/<<PROJECT_ID>>-credentials.json:/logzio-pubsub/<<PROJECT_ID>>-credentials.json \
 logzio/logzio-pubsub
 ```
+
+For Mac users: To fix issues with mounting files from root directory please add the path '/etc/logzio-pubsub' to your Docker File Sharing.
+Click [here](https://medium.com/effy-tech/fixing-the-var-folders-error-in-docker-for-mac-v2-2-3-2a40e776132d) for a guide on how to fix this issue - you can use docker desktop or manually edit your Docker configuration file.
+For more information about mounting files from root directory click [here](https://docs.docker.com/docker-for-mac/osxfs/#namespaces).
 
 #### 6. Check Logz.io for your logs
 
