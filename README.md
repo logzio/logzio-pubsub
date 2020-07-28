@@ -41,7 +41,7 @@ You can build it through:
 ###### Option 1: In the command line
 
 Build your credentials file using your Google Cloud project ID.  
-Before you begin make sure your 'gcloud' cli is installed. If not, execute the following:
+Before you begin, make sure your 'gcloud' CLI is installed. If not, execute the following:  
   1. Download the 'google-cloud-sdk' to '/etc/logzio-pubsub'
   2. Run  ```etc/logzio-pubsub/google-cloud-sdk/install.sh```
  
@@ -122,9 +122,9 @@ Click here for more information about [filebeat for Google Cloud Pub/Sub](https:
 | Parameter | Description |
 |---|---|
 | listener | The Logz.io listener host. (Default value: `listener.logz.io`) <br> Replace `<<LISTENER-HOST>>` with your region's listener host. For more information on finding your account's region, see [Account region](https://docs.logz.io/user-guide/accounts/account-region.html). |
-| pubsubs | This is an array of one or more GCP subscriptions. For each topic, provide topic and subscriptions IDs, as given from Pub/Sub. |
+| pubsubs | This is an array of one or more GCP subscriptions. For each topic, provide topic and subscription IDs, as given from Pub/Sub. |
 | token | Your Logz.io shipping token. For each project under `pubsubs`. <br> Replace `<<SHIPPING-TOKEN>>` with the [token](https://app.logz.io/#/dashboard/settings/general) of the account you want to ship to. You can send your logs to different accounts that are in the same region, you can do that by inserting different tokens. |
-| credentials_file (Not required, Default value: '<project_id>-credentials.json') | This field is only required if your credentials file is named differently than the default value. For an example of adding this field go to [input example file](https://github.com/logzio/logzio-pubsub/blob/master/pubsub-input-example.yml). |
+| credentials_file (Not required, Default value: '<project_id>-credentials.json') | This field is only required if your credentials file was renamed and does not have the default name. For an example of adding this field go to [input example file](https://github.com/logzio/logzio-pubsub/blob/master/pubsub-input-example.yml). |
 
 ##### 4. Pull the Docker image
 
