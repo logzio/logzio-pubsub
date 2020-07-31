@@ -32,12 +32,12 @@ def _add_all_topics():
 
 def _add_subscriber(publisher, subscriber):
     project_id = publisher["project_id"]
-
+    credentials_file = publisher.get("credentials_file", str(project_id) + "-credentials.json")
     subscriber_dict = {
         "type": "google-pubsub",
         "project_id": project_id,
         "topic": publisher["topic_id"],
-        "credentials_file": publisher["credentials_file"],
+        "credentials_file": "/logzio-pubsub/" + credentials_file,
         "subscription.name": subscriber,
         "fields":
             {
