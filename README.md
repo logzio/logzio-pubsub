@@ -194,7 +194,7 @@ If you decide to give the credentials file another name, please follow these ins
 
 - Upgraded Filebeat to version 7.12.0.
 - Changed yaml handler from `ruamel.yaml` to `pyyaml`.
-- Added ARM support.
+- Added ARM support. To Build Image to support ARM please use `docker build -f Dockerfile-arm .`
 
   0.0.7:
 
