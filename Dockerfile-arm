@@ -13,8 +13,8 @@ RUN apt-get update && \
 	apt-get install -y \
 	curl \
 	wget && \
-	curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.12.0-amd64.deb && \
-	dpkg -i filebeat-7.12.0-amd64.deb && \
+	curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.12.0-arm64.deb && \
+	dpkg -i filebeat-7.12.0-arm64.deb && \
 	wget -P /etc/pki/tls/certs/ https://raw.githubusercontent.com/logzio/public-certificates/master/TrustExternalCARoot_and_USERTrustRSAAAACA.crt && \
 	pip install -r requirements.txt && \
 	rm requirements.txt
