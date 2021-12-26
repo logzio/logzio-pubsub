@@ -196,15 +196,15 @@ If you decide to give the credentials file another name, please follow these ins
 - Changed yaml handler from `ruamel.yaml` to `pyyaml`.
 - Added ARM support. To Build Image to support ARM please use `docker build -f Dockerfile-arm .`
 
-  0.0.7:
+0.0.7:
 
 - Updated creating credentials script and automated naming of credentials files for 'pubsub-input.yml' file.
 
-  0.0.6:
+0.0.6:
 
 - Fixed multiple listeners option.
 
-  0.0.5:
+0.0.5:
 
 - Updated a new public SSL certificate.
 
