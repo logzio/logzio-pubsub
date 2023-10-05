@@ -1,3 +1,6 @@
+# ⚠️ Deprecation notice ⚠️:
+This project is deprecated and no longer maintained. Instead, please refer to [this project](https://github.com/logzio/logzio-google-pubsub).
+
 # Pub/Sub to Logz.io
 
 Google Cloud Platform (GCP) Stackdriver collects logs from your cloud services.
